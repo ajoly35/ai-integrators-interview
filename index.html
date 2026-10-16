@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Integrators Study</title>
+<style>
+  :root { --bg:#fafaf8; --ink:#1d1d1b; --quiet:#5c5c58; --rule:#e2e2dc; --accent:#1f4e79; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161615; --ink:#ececea; --quiet:#a8a8a2; --rule:#33332f; --accent:#8fb8de; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width:640px; margin:0 auto; padding:48px 16px 160px; }
+  @media (min-width: 1100px) { main { margin-left:max(16px, calc(50% - 560px)); } }
+  .tag { font:600 12px/1 system-ui, sans-serif; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+  h1 { font-size:30px; line-height:1.2; margin:12px 0 20px; }
+  p, li { color:var(--ink); }
+  .quiet { color:var(--quiet); font-size:15px; }
+  ul { padding-left:20px; }
+  .box { border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:16px 0; margin:24px 0; }
+  .consent { font:15px/1.5 system-ui, sans-serif; display:flex; gap:10px; align-items:flex-start; }
+  .consent input { margin-top:4px; width:18px; height:18px; }
+  #start-note { font:14px/1.4 system-ui, sans-serif; color:var(--quiet); }
+  #widget-slot { margin-top:16px; min-height:40px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="tag">London School of Economics · Pilot</div>
+  <h1>How is AI really being put to work?</h1>
+  <p>We are interviewing people who build and deploy AI systems for other organisations: founders, engineers, forward-deployed engineers and consultants at AI startups and agencies. You see how adoption actually happens; we want to learn from that.</p>
+  <div class="box">
+    <ul>
+      <li>An AI interviewer asks about one recent client project that went live and one that stalled.</li>
+      <li>It takes about 15 minutes. You can speak, or type in the chat box.</li>
+      <li>Please do not name clients or individuals. Answers are used for research only and reported in aggregate.</li>
+      <li>You can stop at any time. Say or type "stop" to end.</li>
+    </ul>
+    <p class="quiet">This is a pilot of the interview. Conversations are recorded and transcribed by ElevenLabs on behalf of the research team. Questions: Adrien Joly, LSE.</p>
+  </div>
+  <label class="consent"><input type="checkbox" id="consent"> I have read the above and agree to take part in this pilot interview.</label>
+  <p id="start-note">Tick the box to show the interviewer. It opens in the bottom-right corner; allow microphone access when asked, or type instead.</p>
+  <div id="widget-slot"></div>
+</main>
+<script>
+  var AGENT_ID = "agent_0601m53cyv49fa9r61440p38sqmq";
+  var q = new URLSearchParams(location.search);
+  var source = (q.get("src") || "direct").replace(/[^a-z0-9_-]/gi, "").slice(0, 32) || "direct";
+  var arm = q.get("arm");
+  if (arm !== "info" && arm !== "control") {
+    try { arm = localStorage.getItem("aii_arm"); } catch (e) {}
+    if (arm !== "info" && arm !== "control") arm = Math.random() < 0.5 ? "info" : "control";
+    try { localStorage.setItem("aii_arm", arm); } catch (e) {}
+  }
+  document.getElementById("consent").addEventListener("change", function (e) {
+    if (!e.target.checked || document.querySelector("elevenlabs-convai")) return;
+    var w = document.createElement("elevenlabs-convai");
+    w.setAttribute("agent-id", AGENT_ID);
+    w.setAttribute("dynamic-variables", JSON.stringify({ source: source, arm: arm }));
+    document.body.appendChild(w);
+    var s = document.createElement("script");
+    s.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+    s.async = true;
+    document.body.appendChild(s);
+    document.getElementById("start-note").textContent = "The interviewer is in the bottom-right corner. Press the call button to start.";
+  });
+</script>
+</body>
+</html>
