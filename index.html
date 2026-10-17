@@ -31,7 +31,7 @@
   <div class="box">
     <ul>
       <li>An AI interviewer asks about one client firm you worked with, how each level of that firm was affected, and a similar firm that did not go ahead.</li>
-      <li>It takes about 20 minutes. You can speak, or type in the chat box.</li>
+      <li>It takes about 25 minutes. You can speak, or type in the chat box.</li>
       <li>Please do not name clients, prospective clients or individuals. Answers are used for research only and reported in aggregate.</li>
       <li>You can stop at any time. Say or type "stop" to end.</li>
     </ul>
@@ -42,9 +42,11 @@
   <div id="widget-slot"></div>
 </main>
 <script>
-  var AGENT_ID = "agent_3701m53emdb9f1gaw337z4hgt9an";
   var q = new URLSearchParams(location.search);
   var source = (q.get("src") || "direct").replace(/[^a-z0-9_-]/gi, "").slice(0, 32) || "direct";
+  // v3 agents (Gmail account): US voice and US framing for ?m=us or US-coded links, UK otherwise.
+  var market = (q.get("m") || (/^us/i.test(source) ? "us" : "uk")).toLowerCase();
+  var AGENT_ID = market === "us" ? "agent_3701m54ss398er28w6yhkp9x9k8e" : "agent_4101m54ss1atepdtagan9nyza7dj";
   var arm = q.get("arm");
   if (arm !== "info" && arm !== "control") {
     try { arm = localStorage.getItem("aii_arm"); } catch (e) {}
