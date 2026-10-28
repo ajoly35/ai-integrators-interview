@@ -60,7 +60,7 @@ we want to learn from that.</p>
 <ul>
 <li>An AI interviewer asks about one client firm you worked with, how each level of that firm was affected, and
 a similar firm that did not go ahead.</li>
-<li>It takes about 25 minutes. You can speak, or type in the chat box.</li>
+<li>It takes about 30 minutes. You can speak, or type in the chat box.</li>
 <li>Please do not name clients, prospective clients or individuals. Answers are used for research only and
 reported in aggregate.</li>
 <li>You can stop at any time. Say or type "stop" to end.</li>
