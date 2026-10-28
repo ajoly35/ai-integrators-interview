@@ -21,7 +21,7 @@ AGENTS = {
     "us": "agent_3701m54ss398er28w6yhkp9x9k8e",  # v3 US (Eric)
 }
 WIDGET_SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed"
-WIDGET_HEIGHT = 560  # room for the expanded widget with its text box; the call card alone needs about 220
+WIDGET_HEIGHT = 480  # room for the expanded widget with its transcript (voice only, no text box)
 
 st.set_page_config(page_title="AI Integrators Study", page_icon="🎙️", layout="centered",
                    initial_sidebar_state="collapsed")
@@ -60,10 +60,10 @@ we want to learn from that.</p>
 <ul>
 <li>An AI interviewer asks about one client firm you worked with, how each level of that firm was affected, and
 a similar firm that did not go ahead.</li>
-<li>It takes about 30 minutes. You can speak, or type in the chat box.</li>
+<li>It takes about 30 minutes and is done by voice, so you need a microphone and a quiet place.</li>
 <li>Please do not name clients, prospective clients or individuals. Answers are used for research only and
 reported in aggregate.</li>
-<li>You can stop at any time. Say or type "stop" to end.</li>
+<li>You can stop at any time. Say "stop" or press the end-call button to finish.</li>
 </ul>
 <p class="aii-quiet">This is a pilot of the interview. Conversations are recorded and transcribed by ElevenLabs on
 behalf of the research team. Questions: Adrien Joly, LSE.</p>
@@ -76,9 +76,9 @@ behalf of the research team. Questions: Adrien Joly, LSE.</p>
 consent = st.checkbox("I have read the above and agree to take part in this pilot interview.", key="consent")
 
 if not consent:
-    st.caption("Tick the box to show the interviewer. Allow microphone access when asked, or type instead.")
+    st.caption("Tick the box to show the interviewer. Allow microphone access when asked.")
 else:
-    st.caption("The interviewer is below. Press the call button to start, or use the chat box to type.")
+    st.caption("The interviewer is below. Press the call button to start.")
     dyn = html.escape(json.dumps({"source": source, "arm": arm}), quote=True)
     markup = f"""
     <style>html,body{{margin:0;padding:0;background:transparent;}}</style>
